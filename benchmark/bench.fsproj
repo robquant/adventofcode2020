@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <ProjectGuid>{e897e6b0-3495-4c79-8694-9608c15e7bc2}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Bench.fs" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+  </ItemGroup>
+</Project>
