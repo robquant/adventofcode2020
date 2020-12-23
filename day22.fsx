@@ -40,9 +40,16 @@ type Hash =
         new(h1: int, h2: int) = { hash1 = h1; hash2 = h2 }
     end
 
-let rec game2 (deck1: int array) (deck2: int array) (history: HashSet<Hash>) =
+let score (deck: int array) =
+    let mutable result = 0
+    for i = 1 to deck.Length do
+        result <- result + i * deck.[deck.Length - i]
 
-    let deckHash = Hash(hash deck1, hash deck2)
+    result
+
+let rec game2 (deck1: int array) (deck2: int array) (history: HashSet<_>) =
+
+    let deckHash = (score deck1) * (score deck2)
 
     if not (history.Add(deckHash)) then
         (1, deck1)
@@ -61,7 +68,7 @@ let rec game2 (deck1: int array) (deck2: int array) (history: HashSet<Hash>) =
                && (Array.length deck2 > x2) then
                 let x1s = Array.sub deck1 1 x1
                 let x2s = Array.sub deck2 1 x2
-                fst (game2 x1s x2s (HashSet<Hash>()))
+                fst (game2 x1s x2s (HashSet<int>()))
             else if x1 > x2 then
                 1
             else
@@ -91,7 +98,7 @@ let value deck = snd (List.foldBack add deck (1, 0))
 let (_, windeck1) = game1 deck1 deck2 Set.empty
 
 let (_, windeck2) =
-    game2 (deck1 |> Array.ofList) (deck2 |> Array.ofList) (HashSet<Hash>())
+    game2 (deck1 |> Array.ofList) (deck2 |> Array.ofList) (HashSet<int>())
 
 printfn "Part 1: %d" (value windeck1)
-printfn "Part 2: %d" (value (windeck2 |> List.ofArray))
+printfn "Part 2: %d" (score windeck2)
